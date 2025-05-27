@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <!--
-* @description:
-* @author Aline Reis
-* @date 26/05/2025
+* @description: Acessa o título do segundo livro em um XML com DOMParser
+* @author: Aline Reis
+* @date: 26/05/2025
 -->
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,7 @@
 <div id="resultado">
     Verifique o console do navegador (F12) para o resultado.
 </div>
+
 <script>
     const xmlString = `
 <biblioteca>
@@ -28,15 +29,28 @@
     </livro>
 </biblioteca>
 `;
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
-    const segundoLivro = xmlDoc.querySelectorAll("livro")[1];
-    const tituloSegundoLivro = segundoLivro.querySelector("titulo");
 
-    if (tituloSegundoLivro) {
-        console.log(tituloSegundoLivro.textContent);
-    } else {
-        console.error("Não foi possível encontrar o título do segundo livro.");
+    try {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+        // Verifica se o XML foi parseado corretamente
+        const parserError = xmlDoc.getElementsByTagName("parsererror");
+        if (parserError.length > 0) {
+            throw new Error("Erro ao fazer parse do XML.");
+        }
+
+        // Acessa o segundo <livro>
+        const segundoLivro = xmlDoc.querySelectorAll("livro")[1];
+        const tituloSegundoLivro = segundoLivro.querySelector("titulo");
+
+        if (tituloSegundoLivro) {
+            console.log("Título do segundo livro:", tituloSegundoLivro.textContent);
+        } else {
+            console.error("Elemento <titulo> não encontrado no segundo livro.");
+        }
+    } catch (e) {
+        console.error("Erro ao processar XML:", e);
     }
 </script>
 </body>
