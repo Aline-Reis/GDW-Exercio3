@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <!--
-* @description: Acessa o título do segundo livro em um XML com DOMParser
+* @description: Manipulação da Estrutura DOM com XML e JavaScript
 * @author: Aline Reis
 * @date: 26/05/2025
 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Exercícios: Manipulação da Estrutura DOM com XML e JavaScript</title>
+    <title>Exercícios XML + DOM</title>
 </head>
 <body>
-<h1>Acessando o título do segundo livro</h1>
+<h1>Exercícios com XML e DOM</h1>
 <div id="resultado">
-    Verifique o console do navegador (F12) para o resultado.
+    Verifique o console do navegador (F12) para os resultados dos exercícios.
 </div>
 
 <script>
@@ -33,21 +33,28 @@
     try {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlString, "text/xml");
-
-        // Verifica se o XML foi parseado corretamente
         const parserError = xmlDoc.getElementsByTagName("parsererror");
         if (parserError.length > 0) {
             throw new Error("Erro ao fazer parse do XML.");
         }
-
-        // Acessa o segundo <livro>
         const segundoLivro = xmlDoc.querySelectorAll("livro")[1];
         const tituloSegundoLivro = segundoLivro.querySelector("titulo");
-
         if (tituloSegundoLivro) {
             console.log("Título do segundo livro:", tituloSegundoLivro.textContent);
         } else {
             console.error("Elemento <titulo> não encontrado no segundo livro.");
+        }
+
+        // Iterar sobre os filhos de
+        console.log("Nós filhos do elemento <biblioteca>:");
+        const raiz = xmlDoc.getElementsByTagName("biblioteca")[0];
+        const filhos = raiz.childNodes;
+
+        for (let i = 0; i < filhos.length; i++) {
+            const node = filhos[i];
+            if (node.nodeType === 1) {
+                console.log("Elemento filho:", node.nodeName);
+            }
         }
     } catch (e) {
         console.error("Erro ao processar XML:", e);
