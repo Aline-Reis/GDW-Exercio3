@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+* @description:
+* @author Aline Reis
+* @date 26/05/2025
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Exercícios: Manipulação da Estrutura DOM com XML e JavaScript</title>
+</head>
+<body>
+<h1>Acessando o título do segundo livro</h1>
+<div id="resultado">
+    Verifique o console do navegador (F12) para o resultado.
+</div>
+<script>
+    const xmlString = `
+<biblioteca>
+    <livro categoria="ficcao">
+        <titulo>O Guia do Mochileiro das Galáxias</titulo>
+        <autor>Douglas Adams</autor>
+    </livro>
+    <livro categoria="tecnico">
+        <titulo>Introdução ao XML</titulo>
+        <autor>Professor Exemplo</autor>
+    </livro>
+</biblioteca>
+`;
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+    const segundoLivro = xmlDoc.querySelectorAll("livro")[1];
+    const tituloSegundoLivro = segundoLivro.querySelector("titulo");
+
+    if (tituloSegundoLivro) {
+        console.log(tituloSegundoLivro.textContent);
+    } else {
+        console.error("Não foi possível encontrar o título do segundo livro.");
+    }
+</script>
+</body>
+</html>
